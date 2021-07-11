@@ -1,0 +1,40 @@
+.container {
+    max-width: 1140px;
+    display: flex;
+}
+.spacer {
+    min-height: 2000px;
+    background-color: #f3f3f3;
+    z-index: 2;
+    position: relative;
+}
+.scroll-top-btn {
+    --size: 5rem;
+    --offset: var(--size);
+    font-size: 2rem;
+    border: none;
+    position: fixed;
+    bottom: 0;
+    right: var(--offset);
+    height: var(--size);
+    width: var(--size);
+    border-radius: 50%;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: 200ms bottom var(--timing-function), 100ms opacity var(--timing-function);
+    z-index: 100;
+}
+@media screen and (max-width: 576px) {
+    .scroll-top-btn {
+        right: calc(var(--size) / 2);
+   }
+}
+.scroll-top-btn.visible {
+    opacity: 1;
+    visibility: visible;
+    bottom: var(--offset);
+}

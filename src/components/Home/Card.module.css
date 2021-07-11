@@ -1,0 +1,45 @@
+.card_container {
+  width: 100%;
+  height: auto;
+  /* background-color: rgb(248, 247, 246); */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  z-index: 1000;
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
+}
+
+.card {
+  height: 260px;
+  width: 300px;
+  margin: 0px 4px;
+}
+
+.card_img {
+  height: 200px;
+  width: 300px;
+  object-fit: cover;
+}
+
+.card_footer {
+  height: 60px;
+  width: auto;
+  margin: 2px 6px;
+}
+
+.card_name,
+.card_location {
+  white-space: nowrap;  
+  color: black;
+  
+  text-overflow: ellipsis;
+  overflow: hidden;
+ 
+}
+
+.filter_menu {
+  Height: 50px;
+  width:100%;
+  background-color: white;
+}
