@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   GoogleMap,
   LoadScript,
   Marker,
   MarkerClusterer,
-  InfoBox,
-} from "@react-google-maps/api";
-import Data from "../../data3.json";
+  InfoWindow,
+} from '@react-google-maps/api';
+import Utils from '../../utilities/utils';
+import { Link } from 'react-router-dom';
+import Data from '../../data3.json';
 
 // https://stackoverflow.com/questions/48332140/react-google-map-infowindow-showing-all-the-info-when-i-click-on-a-single-mark
 
@@ -24,10 +26,10 @@ const position = {
   lng: -122.214,
 };
 
-const locations = Data.cameras.map((cam) => ({
-  lat: cam.lat,
-  lng: cam.lng,
-}));
+// const locations = Data.cameras.map((cam) => ({
+//   lat: cam.lat,
+//   lng: cam.lng,
+// }));
 // const locations = [
 //   { lat: -31.56391, lng: 147.154312 },
 //   { lat: -33.718234, lng: 150.363181 },
@@ -66,33 +68,58 @@ function Map(props) {
   // const cameras = json.cameras;
   return (
     <LoadScript googleMapsApiKey="AIzaSyB3dDRFl0xyLabearBl1NYQ_hTevZZtO4E">
-      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={2}>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={2}
+        onClick={() => setSelectedCam(null)}
+      >
         {/* Child components, such as markers, info windows, etc. */}
         <>
           <MarkerClusterer gridSize={5}>
             {(clusterer) =>
-              locations.map((location) => (
-                <Marker
-                  key={createKey(location)}
-                  position={location}
-                  clusterer={clusterer}
-                  onClick={() => {
-                    setSelectedCam(location);
-                  }}
-                />
+              Data.cameras.map((cam) => (
+                cam.lat
+                  && cam.lng
+                  && <Marker
+                    key={cam.camera_id}
+                    position={{lat: cam.lat, lng: cam.lng}}
+                    clusterer={clusterer}
+                    onClick={() => {
+                    setSelectedCam(cam);
+                    }}
+                  />
               ))
             }
           </MarkerClusterer>
           {selectedCam && (
-            <InfoBox
+            <InfoWindow
               onCloseClick={() => {
                 setSelectedCam(null);
               }}
               position={{
-                lat: selectedCam.latitude,
-                lng: selectedCam.longitude,
+                lat: selectedCam.lat,
+                lng: selectedCam.lng,
               }}
-            ></InfoBox>
+            >
+              <div style={{ background: "white" }}>
+                {"Camera: " + (selectedCam.account_display_name || selectedCam.account_url_name) + ' / ' + selectedCam.camera_name}
+                <br />
+                <Link to={
+                  '/' +
+                  selectedCam.account_url_name +
+                  "/" +
+                  selectedCam.camera_url_name +
+                  "/" +
+                  selectedCam.trigger +
+                  "/" +
+                  selectedCam.dt +
+                  "/" +
+                  Utils.addDashesToTS(selectedCam.ts)} >
+                  <img src={Utils.imgUrlHome(selectedCam, "s", Data)} />
+                </Link>
+              </div>
+            </InfoWindow>
           )}
         </>
       </GoogleMap>
