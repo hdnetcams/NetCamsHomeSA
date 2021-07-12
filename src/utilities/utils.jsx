@@ -203,7 +203,7 @@ const Utils = {
     const { prefix } = j;
     return (
       // eslint-disable-next-line prefer-template
-      'https://storage0.netcams.io/' + img.account_id + '/' + img.camera_id + '/' + dts + (((version !== 'o') && (version !== 'v')) ? '/' + version + '/' : '/')
+      prefix + /*'https://storage0.netcams.io/' +*/ img.account_id + '/' + img.camera_id + '/' + dts + (((version !== 'o') && (version !== 'v')) ? '/' + version + '/' : '/')
         + dts + '_' + Utils.addDashesToTS(img.ts) + '_' + img.image_id + ((version !== 'v') ? '.jpg' : '.mp4')
     );
   },
