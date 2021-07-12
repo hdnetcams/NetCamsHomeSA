@@ -101,6 +101,11 @@ function Map(props) {
                 lat: selectedCam.lat,
                 lng: selectedCam.lng,
               }}
+              options={{
+                pixelOffset: new window.google.maps.Size(
+                  0, -30
+                )
+              }}
             >
               <div style={{ background: "white" }}>
                 {"Camera: " + (selectedCam.account_display_name || selectedCam.account_url_name) + ' / ' + selectedCam.camera_name}
